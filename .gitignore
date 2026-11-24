@@ -1,0 +1,7 @@
+/data/raw/
+/data/processed/train.csv
+/data/processed/trips_clean.csv
+/models/
+__pycache__/
+.venv/
+*.zip

@@ -1,0 +1,9 @@
+pandas
+matplotlib
+numpy
+scikit-learn
+seaborn
+pyarrow
+joblib
+jupyter
+streamlit>=1.67
