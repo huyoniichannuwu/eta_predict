@@ -31,26 +31,56 @@ python -m src.predict "2016-05-24 01:07:16" 40.720699 -73.993965 40.671284 -73.9
 
 Khi cần chạy lại từ dữ liệu gốc, dùng `python -m src.train`. Lệnh này huấn luyện theo công thức trong `src/feature_engineering.py` và ghi lại mô hình, bảng train/test, `reports/metrics.csv` và `reports/predictions.csv`. Hãy sao lưu kết quả đi kèm trước khi chạy lại nếu cần đối chiếu với báo cáo. Lệnh `python -m src.data_pipeline` xuất riêng bảng `trips_clean.csv`.
 
-## Cây thư mục và hai bộ kết quả
+## Cấu trúc cây thư mục
 
 ```text
 eta_predict/
-├── app.py                     Giao diện Streamlit
-├── requirements.txt
-├── src/                       Xử lý dữ liệu, huấn luyện, dự đoán và minh họa
-├── notebooks/                 Khám phá dữ liệu và minh họa mô hình
-├── references/                Tài liệu về khung giờ cao điểm
 ├── data/
-│   ├── raw/trips_raw.csv
-│   └── processed/             trips_clean.csv, train.csv, test.csv
-├── models/                    Ba mô hình đã huấn luyện
-└── reports/
-    ├── metrics.csv            MAE/RMSE của thí nghiệm dùng giờ nguyên
-    ├── predictions.csv        Kết quả giờ nguyên dùng trong Streamlit
-    ├── metrics_co_minute.csv  MAE/RMSE của thử nghiệm thêm phút
-    ├── figures/               Biểu đồ minh họa
-    └── ...
+│   ├── raw/
+│   │   └── trips_raw.csv
+│   └── processed/
+│       ├── train.csv
+│       ├── test.csv
+│       └── trips_clean.csv
+├── notebooks/
+│   ├── 01_eda_and_outliers.ipynb
+│   ├── 02_check_data_clean.ipynb
+│   ├── 03_random_forest.ipynb           # Minh họa Random Forest
+│   ├── 04_hgb.ipynb                     # Minh họa HGB
+│   ├── tim_lon_lat.ipynb                # Tìm tọa độ chuyến id1459588
+│   └── tinh_toan_ct.ipynb               # Tính Manhattan và Haversine
+├── references/
+│   └── traffic_reference.ipynb
+├── src/
+│   ├── config.py
+│   ├── data_pipeline.py
+│   ├── feature_engineering.py
+│   ├── train.py
+│   ├── predict.py
+│   ├── tt_hgb.py
+│   └── tt_random_forest.py
+├── models/
+│   ├── linear_regression.joblib
+│   ├── random_forest.joblib
+│   └── hgb.joblib
+├── reports/
+│   ├── figures/
+│   │   ├── hinh_1_duong_di_cay.png
+│   │   ├── hinh_2_du_doan_100_cay.png
+│   │   └── hinh_hgb_200_vong.png
+│   ├── metrics.csv                     # Kết quả chính dùng giờ nguyên
+│   ├── predictions.csv                 # Dự đoán trên tập kiểm thử
+│   └── metrics_co_minute.csv            # Thử nghiệm thêm phút vào sin và cos
+├── app.py                              # Giao diện Streamlit tra cứu ETA
+├── chaythu.md
+├── requirements.txt
+├── .gitignore
+└── readme.md
 ```
+
+Các tệp trong `data/raw/`, `models/`, cùng `train.csv` và `trips_clean.csv` có trong bản ZIP đầy đủ. Repo GitHub giữ `test.csv` và `predictions.csv` để chạy giao diện Streamlit.
+
+## Hai bộ kết quả
 
 Báo cáo dùng thí nghiệm **giờ nguyên** làm kết quả chính. Các mô hình và bảng train/test đi kèm dùng công thức **giờ + phút/60** cho sin và cos, tương ứng với lần chạy thử nghiệm bổ sung. Giao diện đọc sẵn dự đoán của thí nghiệm chính. Lệnh dự đoán một chuyến từ tọa độ dùng mô hình đi kèm.
 
