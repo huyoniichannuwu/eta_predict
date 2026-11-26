@@ -30,12 +30,15 @@ def add_features(df):
     df["manhattan_km"] = haversine(plat, plon, dlat, plon) + haversine(dlat, plon, dlat, dlon)
 
     df["hour"] = df["pickup_datetime"].dt.hour
-    df["minute"] = df["pickup_datetime"].dt.minute              #them minute
+    
+    #df["minute"] = df["pickup_datetime"].dt.minute              #them minute cho mục update hoursin
+    # hour_with_minutes = df["hour"] + df["minute"] / 60
+    # angle = 2 * np.pi * hour_with_minutes / 24
 
     df["dayofweek"] = df["pickup_datetime"].dt.dayofweek
     
-    hour_with_minutes = df["hour"] + df["minute"] / 60
-    angle = 2 * np.pi * hour_with_minutes / 24
+    
+    angle = 2 * np.pi * df["hour"] / 24
 
     df["hour_sin"] = np.sin(angle)
     df["hour_cos"] = np.cos(angle)
